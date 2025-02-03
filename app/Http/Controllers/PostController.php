@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -23,6 +24,7 @@ class PostController extends Controller
     {
         return view('posts.create');
     }
+
     public function store(Request $req)
     {
         $post = new Post();
@@ -33,7 +35,7 @@ class PostController extends Controller
 
         $post->save();
 
-        return redirect('/posts');
+        return redirect()->route('posts.index');
     }
 
     public function destroy($id)
@@ -41,7 +43,7 @@ class PostController extends Controller
         $post = Post::find($id);
         if ($post) {
             $post->delete();
-            return redirect('/posts');
+            return redirect()->route('posts.index');
         }
     }
 }

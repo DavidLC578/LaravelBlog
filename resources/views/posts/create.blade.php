@@ -1,7 +1,8 @@
 <x-app-layout>
     <div class="flex justify-center items-center w-full mt-10">
-        <div class="w-3/4 bg-gray-200 flex justify-center py-18 rounded-xl shadow-md">
-            <form action="/posts" method="post" class="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl space-y-4">
+        <div class="w-3/4 flex justify-center py-18 rounded-xl">
+            <form action="{{ route('posts.store') }}" method="post"
+                class="bg-white shadow-xl rounded-lg p-6 w-full max-w-2xl space-y-4">
                 @csrf
                 <h2 class="text-2xl font-semibold text-gray-700 text-center">Create a Post</h2>
 
