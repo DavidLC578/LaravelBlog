@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="flex items-center justify-center h-screen">
+    <div class="flex items-center justify-center md:h-screen mt-22 md:mt-0">
         <form action="{{ route('auth.register') }}" method="post"
             class="w-full max-w-md bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4">
             @csrf

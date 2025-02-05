@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -31,7 +32,7 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
 
         $user->save();
-        // Auth::login($user);
+        Auth::login($user);
 
         return redirect('/');
     }
@@ -47,5 +48,12 @@ class AuthController extends Controller
         }
 
         return redirect()->route('login');
+    }
+
+    public function logout()
+    {
+        Session::flush();
+        Auth::logout();
+        return redirect('/');
     }
 }

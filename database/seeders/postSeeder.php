@@ -17,7 +17,8 @@ class postSeeder extends Seeder
             'title' => "Titulo 1",
             'description' => "Descripcion 1",
             'content' => "Contenido 1",
-            'category' => 'Categoria 1'
+            'category' => 'Categoria 1',
+            'user_id' => '1'
         ]);
         //
     }

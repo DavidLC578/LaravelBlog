@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class);
@@ -25,12 +26,28 @@ Route::get('/register', [AuthController::class, 'registerView'])
 Route::get('/login', [AuthController::class, 'loginView'])
     ->name('login');
 
+// Admin
+Route::get('/admin/dashboard', [DashboardController::class, 'dashboardView'])
+    ->middleware('can:admin.dashboard')
+    ->name('admin.dashboard');
+
+Route::delete('/admin/posts/{post}', [PostController::class, 'destroy'])
+    ->name('admin.post.destroy');
+Route::get("/admin/users/{user}", [DashboardController::class, 'editRoleView'])
+    ->name('admin.user.roleView');
+Route::delete('/admin/users/{user}', [DashboardController::class, 'destroyUser'])
+    ->name('admin.user.destroy');
+Route::put('/admin/users/{user}', [DashboardController::class, 'editRole'])
+    ->name('admin.user.editRole');
+
 // Actions
 Route::middleware('auth')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])
         ->name('posts.store');
-    Route::delete("/posts/{post}", [PostController::class, 'destroy'])
+    Route::delete("/posts/post/{post}", [PostController::class, 'destroy'])
         ->name('posts.destroy');
+    Route::get('/logout', [AuthController::class, 'logout'])
+        ->name('logout');
 });
 
 Route::post('/register', [AuthController::class, 'register'])

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,8 +17,9 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        $user = $post->user;
 
-        return view('posts.show', compact('post'));
+        return view('posts.show', compact('post', 'user'));
     }
 
     public function create()
@@ -27,11 +29,14 @@ class PostController extends Controller
 
     public function store(Request $req)
     {
+
+
         $post = new Post();
         $post->title = $req->title;
         $post->description = $req->description;
         $post->category = $req->category;
         $post->content = $req->content;
+        $post->user_id = Auth::user()->id;
 
         $post->save();
 

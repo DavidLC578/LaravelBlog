@@ -8,12 +8,15 @@
                     <p class="text-gray-600 mt-2">{{ $post->description }}</p>
                 </a>
                 @auth
-                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="ml-4">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                            class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300">Delete</button>
-                    </form>
+                    @can('admin.post.destroy')
+                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="ml-4">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="cursor-pointer bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300">Delete</button>
+                        </form>
+                    @endcan
+                    {{-- @endforeach --}}
                 @endauth
             </div>
         @endforeach

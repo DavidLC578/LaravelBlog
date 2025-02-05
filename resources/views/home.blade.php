@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="min-h-screen flex flex-col items-center justify-center">
+    <div class="mt-22 md:mt-0 md:min-h-screen flex flex-col items-center justify-center">
         <div class="text-center">
             <h1 class="text-4xl font-bold text-gray-800 mb-4">Bienvenido a Nuestra Aplicación</h1>
             <p class="text-lg text-gray-600 mb-8">Explora las opciones disponibles para comenzar.</p>
