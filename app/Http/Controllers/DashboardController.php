@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
@@ -18,7 +19,7 @@ class DashboardController extends Controller
     public function editRoleView($id)
     {
         $user = User::find($id);
-        $roles = Role::all();
+        $roles = Role::whereNotIn('name', ['god'])->get();
         return view('admin.editRole', compact('user', 'roles'));
     }
 
@@ -26,6 +27,17 @@ class DashboardController extends Controller
     public function destroyUser($id)
     {
         $user = User::find($id);
+        $authUser = Auth::user();
+
+        if ($authUser->hasRole('admin') && !$user->hasRole('user')) {
+            return to_route('admin.dashboard');
+        }
+
+        if ($authUser->hasRole('god')) {
+            $user->delete();
+            return to_route('admin.dashboard');
+        }
+
         $user->delete();
         return to_route('admin.dashboard');
     }
@@ -35,8 +47,19 @@ class DashboardController extends Controller
     public function editRole(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->syncRoles([$request->role]); // Reemplaza cualquier rol previo con el nuevo
+        $authUser = Auth::user();
 
+        if ($authUser->hasRole('admin') && !$user->hasRole('user')) {
+            return to_route('admin.dashboard');
+        }
+
+        if ($authUser->hasRole('god')) {
+            $user->syncRoles([$request->role]);
+            return to_route('admin.dashboard');
+        }
+
+
+        $user->syncRoles([$request->role]); // Reemplaza cualquier rol previo con el nuevo
         return to_route('admin.dashboard')->with('success', 'Rol actualizado correctamente');
     }
 }

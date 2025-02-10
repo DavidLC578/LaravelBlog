@@ -21,14 +21,19 @@ class DatabaseSeeder extends Seeder
             'name' => 'David',
             'email' => 'david@gmail.com',
             'password' => '$2y$12$g62wZjmmOKWCoFuBoLkArOXn3cIBXUxAtTLDjIGwtuZjrnXdGgJUe'
-        ])->assignRole('admin');
+        ])->assignRole('god');
 
         User::factory()->create([
             'name' => 'Juan',
             'email' => 'Juan@gmail.com',
             'password' => '$2y$12$g62wZjmmOKWCoFuBoLkArOXn3cIBXUxAtTLDjIGwtuZjrnXdGgJUe'
-        ])->assignRole('user');
+        ])->assignRole('admin');
 
+        User::factory()->create([
+            'name' => 'Carlos',
+            'email' => 'carlos@gmail.com',
+            'password' => '$2y$12$g62wZjmmOKWCoFuBoLkArOXn3cIBXUxAtTLDjIGwtuZjrnXdGgJUe'
+        ])->assignRole('user');
         $this->call(postSeeder::class);
         // Post::factory(20)->create();
     }

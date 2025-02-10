@@ -12,14 +12,17 @@ Route::get('/', HomeController::class);
 // Views
 Route::get('/posts', [PostController::class, 'index'])
     ->name('posts.index');
-
 Route::middleware('auth')->group(function () {
     Route::get('/posts/create', [PostController::class, 'create'])
         ->name('posts.create');
 });
-
 Route::get("posts/{post}", [PostController::class, 'show'])
     ->name('posts.show');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/posts/edit/{post}', [PostController::class, 'edit'])
+        ->name('posts.edit');
+});
 
 Route::get('/register', [AuthController::class, 'registerView'])
     ->name('auth.registerView');
@@ -35,6 +38,7 @@ Route::delete('/admin/posts/{post}', [PostController::class, 'destroy'])
     ->name('admin.post.destroy');
 Route::get("/admin/users/{user}", [DashboardController::class, 'editRoleView'])
     ->name('admin.user.roleView');
+
 Route::delete('/admin/users/{user}', [DashboardController::class, 'destroyUser'])
     ->name('admin.user.destroy');
 Route::put('/admin/users/{user}', [DashboardController::class, 'editRole'])
@@ -46,6 +50,8 @@ Route::middleware('auth')->group(function () {
         ->name('posts.store');
     Route::delete("/posts/post/{post}", [PostController::class, 'destroy'])
         ->name('posts.destroy');
+    Route::put("/posts/edit/{post}", [PostController::class, 'update'])
+        ->name('posts.update');
     Route::get('/logout', [AuthController::class, 'logout'])
         ->name('logout');
 });

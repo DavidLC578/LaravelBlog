@@ -15,6 +15,10 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         // Roles
+        $godRole = Role::create([
+            'name' => 'god'
+        ]);
+
         $adminRole = Role::create([
             'name' => 'admin'
         ]);
@@ -26,10 +30,10 @@ class RoleSeeder extends Seeder
         // Permissions
         $dashboardView = Permission::create([
             'name' => 'admin.dashboard'
-        ])->syncRoles([$adminRole]);
+        ])->syncRoles([$adminRole, $godRole]);
 
         $deletePost = Permission::create([
             'name' => 'admin.post.destroy'
-        ])->syncRoles([$adminRole]);
+        ])->syncRoles([$adminRole, $godRole]);
     }
 }
